@@ -60,7 +60,8 @@ Follow these steps to get the project running on your local machine.
 
    ```bash
    https://github.com/chachaa10/student-crud.git
-    cd student-crud
+
+   cd student-crud
    ```
 
 2. Navigate to the frontend directory in your project:
@@ -106,10 +107,10 @@ Follow these steps to get the project running on your local machine.
       DB_DATABASE=studentportal
       ```
 
-4.  **Run Database Migrations/Setup (if applicable):** If you have any scripts to create tables or seed data, run them now. For example, you might have a SQL file:
+4.  **Run Database Migrations/Setup (if applicable):**
 
     ```bash
-    mysql -u your_mysql_username -p student_portal < database.sql
+    mysql -u your_mysql_username -p studentportal < schema.sql
     ```
 
     Or, if you're using an ORM or custom scripts, follow the instructions in your backend documentation.

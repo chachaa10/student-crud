@@ -23,15 +23,6 @@ create table
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     );
 
-DESCRIBE students;
-
-drop table students;
-
-select
-    *
-from
-    students;
-
 INSERT INTO
     students (
         first_name,
