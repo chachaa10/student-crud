@@ -27,6 +27,7 @@ A simple and responsive CRUD (Create, Read, Update, Delete) student portal built
 - **Delete:** Remove student records from the database.
 - **Form Validation:** Client-side validation for input fields to ensure data accuracy.
 - **Mobile Responsive:** Designed to work seamlessly on various screen sizes.
+- **QR Code:** View in a mobile
 
 ## Technologies Used
 
