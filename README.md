@@ -46,6 +46,7 @@ A simple and responsive CRUD (Create, Read, Update, Delete) student portal built
 
 Before you begin, ensure you have the following installed:
 
+- [Git](https://git-scm.com/downloads)
 - [Node.js](https://nodejs.org/download/) (version >= 16 recommended)
 - [npm](https://www.npmjs.com/) (usually installed with Node.js) or [yarn](https://yarnpkg.com/)
 - [MySQL](https://dev.mysql.com/downloads/)
@@ -59,7 +60,7 @@ Follow these steps to get the project running on your local machine.
 1. Clone the repository
 
    ```bash
-   https://github.com/chachaa10/student-crud.git
+   git clone https://github.com/chachaa10/student-crud.git
 
    cd student-crud
    ```
