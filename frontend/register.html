@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Register User</title>
+		<link rel="stylesheet" href="./css/default.css" />
+		<link rel="stylesheet" href="./css/register.css" />
+		<script src="./js/register.js" defer></script>
+	</head>
+	<body id="mainContent" class="hidden">
+		<main class="container">
+			<h1>Registration Form</h1>
+			<p class="description">Fill out the form carefully for registration</p>
+
+			<form action="" id="myForm">
+				<fieldset>
+					<legend class="information">Personal Information</legend>
+					<p class="big-label">Full Name</p>
+					<div class="name-group">
+						<div class="form-group gap">
+							<input
+								type="text"
+								name="first_name"
+								id="first-name"
+								required
+								autocapitalize="words"
+								autocomplete="given-name" />
+							<label for="first-name " class="required">First Name</label>
+						</div>
+						<div class="form-group gap">
+							<input
+								type="text"
+								name="middle_name"
+								id="middle-name"
+								autocapitalize="words"
+								autocomplete="additional-name" />
+							<label for="middle-name">Middle Name (Optional)</label>
+						</div>
+						<div class="form-group gap">
+							<input
+								type="text"
+								name="last_name"
+								id="last-name"
+								autocapitalize="words"
+								autocomplete="family-name"
+								required />
+							<label for="last-name" class="required">Last Name</label>
+						</div>
+					</div>
+
+					<div class="personal-information">
+						<div class="form-group gap">
+							<label for="birthdate" class="big-label required">Birth Date</label>
+							<input
+								type="date"
+								name="birthdate"
+								id="birthdate"
+								autocomplete="bday"
+								class="date-input"
+								required />
+						</div>
+						<div class="form-group gender gap">
+							<label for="gender" class="big-label gender-label required">Gender</label>
+							<select name="gender" id="gender" class="gender">
+								<option value="" disabled selected>-- Please Select --</option>
+								<option value="male">Male</option>
+								<option value="female">Female</option>
+								<option value="other">Prefer not to say</option>
+							</select>
+						</div>
+						<div class="form-group gap">
+							<label for="email" class="big-label required">Email Address</label>
+							<input
+								type="email"
+								name="email"
+								id="email"
+								autocomplete="email"
+								placeholder="ex. myname@example.com"
+								required />
+						</div>
+						<div class="form-group gap">
+							<label for="mobile-number" class="big-label required">Mobile Number</label>
+							<input
+								type="tel"
+								inputmode="numeric"
+								name="mobile_number"
+								id="mobile-number"
+								autocomplete="tel"
+								pattern="09[0-9]{9}"
+								minlength="11"
+								maxlength="11"
+								title="Please enter a valid Philippine mobile number"
+								placeholder="ex. 09xxxxxxxxx"
+								required />
+						</div>
+					</div>
+
+					<div class="form-group gap address">
+						<legend class="information">Address Information</legend>
+						<div class="address-container">
+							<div class="street-address">
+								<input
+									type="text"
+									name="street_address"
+									id="street-address"
+									required
+									autocapitalize="words"
+									autocomplete="street-address" />
+								<label for="street-address" class="gap required">Street Address</label>
+							</div>
+							<div class="city">
+								<input
+									type="text"
+									name="city"
+									id="city"
+									required
+									autocapitalize="words"
+									autocomplete="address-level2" />
+								<label for="city" class="gap required">City</label>
+							</div>
+							<div class="state">
+								<input
+									type="text"
+									name="state"
+									id="state"
+									required
+									autocapitalize="words"
+									autocomplete="address-level1" />
+								<label for="state" class="gap required">State / Province</label>
+							</div>
+							<div class="zip">
+								<input
+									type="text"
+									name="zip_code"
+									id="zip-code"
+									autocomplete="postal-code"
+									minlength="4"
+									maxlength="7"
+									required />
+								<label for="zip-code" class="gap required">Postal / Zip Code</label>
+							</div>
+						</div>
+					</div>
+				</fieldset>
+				<fieldset>
+					<legend>Student Information</legend>
+
+					<div class="form-group gap">
+						<label for="student-id" class="big-label required">Student Number</label>
+						<input
+							type="number"
+							inputmode="numeric"
+							name="student_id"
+							id="student-id"
+							placeholder="ex. 20251234"
+							minlength="8"
+							maxlength="8"
+							required />
+					</div>
+
+					<div class="form-group gap">
+						<label for="course" class="big-label required">Program / Major</label>
+						<select name="course" id="course" required>
+							<option value="" selected disabled>-- Please Select --</option>
+							<option value="bsa">BS Accountancy</option>
+							<option value="bsais">BS Accounting Information System</option>
+							<option value="bsat">BS Accounting Technology</option>
+							<option value="bsba">BS Business Administration</option>
+							<option value="bsce">BS Civil Engineering</option>
+							<option value="bscrim">BS Criminology</option>
+							<option value="bael">Bachelor of Arts in English Language (AB English)</option>
+
+							<option value="bshrm">BS Hotel and Restaurant Management</option>
+							<option value="bshm">BS Hospitality Management</option>
+							<option value="bsis">BS Information Systems</option>
+							<option value="bspsych">BS Psychology</option>
+							<option value="beed">Bachelor of Elementary Education</option>
+							<option value="bsed">Bachelor of Secondary Education</option>
+							<option value="bped">Bachelor of Physical Education</option>
+						</select>
+					</div>
+
+					<div class="form-group gap">
+						<label for="year-level" class="big-label required">Year Level</label>
+						<select name="year_level" id="year-level" required>
+							<option value="" selected disabled>-- Please Select --</option>
+							<option value="1">1st Year</option>
+							<option value="2">2nd Year</option>
+							<option value="3">3rd Year</option>
+							<option value="4">4th Year</option>
+						</select>
+					</div>
+
+					<div class="form-group gap">
+						<label for="password" class="big-label required">Password</label>
+						<input
+							type="text"
+							name="password"
+							id="password"
+							minlength="6"
+							pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}"
+							aria-describedby="password-requirements"
+							required />
+						<p class="password-info" id="password-requirements">
+							Password must contain at least: 6 characters, 1 uppercase, 1 lowercase, and 1 number
+						</p>
+					</div>
+				</fieldset>
+
+				<button type="submit" class="button">Create an Account</button>
+			</form>
+
+			<dialog id="successDialog">
+				<p class="dialog-message">Form Submitted Successfully!</p>
+				<button id="closeDialog" class="close-dialog-button">Done</button>
+			</dialog>
+		</main>
+	</body>
+</html>

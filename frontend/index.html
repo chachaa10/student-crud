@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Login System | CRUD</title>
+		<link rel="stylesheet" href="./css/default.css" />
+		<link rel="stylesheet" href="./css/index.css" />
+		<script src="./js/index.js" defer></script>
+	</head>
+	<body class="hidden" id="mainContent">
+		<main class="container">
+			<section>
+				<h1>Student Portal</h1>
+				<form id="loginForm">
+					<label for="email">Email</label>
+					<div class="email-container">
+						<img src="./public/email_24dp_000000.svg" alt="Email Icon" class="email-icon" />
+						<input type="email" name="email" id="email" class="email-input" autocomplete="email" required />
+					</div>
+
+					<label for="password" class="password-label">Password</label>
+					<div class="password-container">
+						<img src="./public/lock_24dp_000000.svg" class="password-icon" alt="Password Icon" />
+						<input type="password" name="password" id="password" class="password-input" required />
+					</div>
+					<div id="loginError" class="error-message"></div>
+
+					<a href="#" class="forgot-pass">Forgot Password?</a>
+					<div class="buttons">
+						<button type="Submit">Login</button>
+						<p>
+							Don't have an account?
+							<a href="register.html" class="register">Register</a>
+						</p>
+					</div>
+				</form>
+			</section>
+		</main>
+	</body>
+</html>

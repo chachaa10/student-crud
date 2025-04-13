@@ -1,0 +1,283 @@
+.container {
+	margin-inline: auto;
+	margin-block: 1em;
+	box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+	border-radius: 10px;
+	background: rgb(255, 255, 255, 0.95);
+	padding: 1em 2em;
+	width: min(90%, 80ch);
+	min-height: 100dvh;
+	min-height: 100vh;
+}
+
+/* xs */
+@media (min-width: 29.6875rem) {
+	.container {
+		max-width: 29.6875rem;
+	}
+}
+
+/* sm */
+@media (min-width: 40rem) {
+	.container {
+		max-width: 40rem;
+	}
+}
+
+/* md */
+@media (min-width: 48rem) {
+	.container {
+		max-width: 48rem;
+	}
+
+	.name-group {
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
+		gap: 1rem;
+	}
+
+	.personal-information {
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+		gap: 1rem;
+	}
+
+	.address-container {
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
+		grid-template-areas:
+			"street-address street-address street-address"
+			"city state zip-code";
+		gap: 1rem;
+	}
+
+	.street-address {
+		grid-area: street-address;
+	}
+
+	.city {
+		grid-area: city;
+	}
+
+	.state {
+		grid-area: state;
+	}
+
+	.zip-code {
+		grid-area: zip-code;
+	}
+}
+
+.description {
+	margin-bottom: 1em;
+	font-weight: 500;
+	font-size: clamp(0.5rem, 2vw + 0.5rem, 1.125rem);
+}
+
+legend {
+	font-weight: 600;
+	font-size: clamp(0.8rem, 2vw + 0.8rem, 1.5rem);
+}
+
+.information {
+	margin-bottom: 0.15em;
+	font-weight: 600;
+	font-size: clamp(1rem, 1.5vw + 1rem, 1.5rem);
+}
+
+fieldset {
+	border: none;
+}
+
+fieldset p,
+label {
+	font-weight: 500;
+	font-size: clamp(0.7rem, 1vw + 0.7rem, 0.9rem);
+}
+
+.big-label {
+	margin-bottom: 0.5em;
+	font-weight: 600;
+	font-size: 1.125rem;
+}
+
+form {
+	display: flex;
+	flex-direction: column;
+}
+
+input,
+select {
+	transition: all 0.1s ease;
+	border: 2px solid #3f3f3f;
+	background-color: #ffffff;
+	padding-block: 3px;
+}
+
+input:focus,
+select:focus {
+	outline: none;
+	box-shadow: 0 0 2px var(--primary-color);
+	border: 2px solid var(--primary-color);
+}
+
+.gap {
+	margin-bottom: 1em;
+}
+
+.gender {
+	display: flex;
+	flex-direction: column;
+}
+
+.big-label.gender-label {
+	margin-bottom: 0;
+}
+
+.address-container > div {
+	margin-bottom: 0.8em;
+
+	&:last-child {
+		margin-bottom: 0;
+	}
+}
+
+.address {
+	display: flex;
+	flex-direction: column;
+
+	& label {
+		margin-bottom: 0.8em;
+
+		&:last-child {
+			margin-bottom: 0;
+		}
+	}
+}
+
+input {
+	padding-left: 0.5em;
+}
+
+input,
+select,
+textarea,
+button {
+	width: 100%;
+	max-width: 100%;
+}
+
+.button {
+	cursor: pointer;
+	border: none;
+	border-radius: 10px;
+	background-color: var(--primary-color);
+	padding: 0.5em 1em;
+	color: white;
+	font-weight: 600;
+	font-size: clamp(0.8rem, 1vw + 1rem, 1.125rem);
+}
+
+.password-info {
+	font-weight: 500;
+	font-size: clamp(0.5rem, 1vw + 0.5rem, 0.85rem);
+}
+
+input[type="number"] {
+	-moz-appearance: textfield;
+}
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+	-webkit-appearance: none;
+	margin: 0;
+}
+
+.form-group {
+	position: relative;
+	margin-bottom: 1.5rem;
+}
+
+label:not(.big-label) {
+	display: block;
+	margin-bottom: 0.5rem;
+	font-weight: 500;
+}
+
+.required::after {
+	margin-left: 0.25rem;
+	content: "*";
+	color: #e3342f;
+	font-size: 1rem;
+}
+
+dialog#successDialog {
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	will-change: opacity, transform;
+	margin: 0;
+	width: 70%;
+	max-width: 400px;
+}
+
+dialog {
+	opacity: 0;
+	transition: opacity 0.3s ease, transform 0.3s ease;
+	box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+	border: none;
+	border-radius: 1.5rem;
+	padding: 1.25rem;
+
+	&::backdrop {
+		background-color: rgba(0, 0, 0, 0.8);
+		min-height: 100vh;
+		min-height: 100dvh;
+	}
+}
+
+dialog.showing {
+	transform: scale(1);
+	opacity: 1;
+}
+
+.close-dialog-button {
+	transition: all 0.2s ease;
+	cursor: pointer;
+	border: none;
+	border-radius: 1em;
+	background-color: rgb(65, 150, 65);
+	padding: 1em 2em;
+	color: white;
+	font-weight: 600;
+	font-size: clamp(0.6rem, 1vw + 0.6rem, 1.125rem);
+
+	&:hover {
+		background-color: rgb(65, 150, 65, 0.8);
+	}
+}
+
+.dialog-message {
+	margin-bottom: 1em;
+	font-weight: 600;
+	font-size: clamp(1.125rem, 1vw + 1.125rem, 1.5rem);
+}
+
+@media screen and (width <= 23.4375rem) {
+	.dialog-message {
+		font-size: 1.125rem;
+		text-align: center;
+	}
+}
+
+@media screen and (width <= 33.0625rem) {
+	.dialog-message {
+		font-size: 1.25rem;
+		text-align: center;
+	}
+}
+
+.hidden {
+	display: none;
+}

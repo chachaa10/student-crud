@@ -1,0 +1,167 @@
+body {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin: 0;
+}
+
+.container {
+	box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+	border-radius: 12px;
+	background: rgb(255, 255, 255, 0.98);
+	padding: 1.5em 1em;
+	width: 100%;
+	max-width: 400px;
+}
+
+h1 {
+	margin-bottom: 1.5rem;
+	font-weight: 700;
+	font-size: clamp(1.5rem, 2vw + 1.5rem, 2.5rem);
+	text-align: center;
+}
+
+form {
+	display: flex;
+	flex-direction: column;
+}
+
+label {
+	margin-bottom: 5px;
+	font-weight: 500;
+	font-size: clamp(0.8rem, 3vw + 1rem, 1rem);
+
+	&::after {
+		margin-left: 0.1em;
+		content: "*";
+		color: red;
+	}
+}
+
+input {
+	transition: all 0.3s ease;
+	border: 1px solid #e2e8f0;
+	border-radius: 6px;
+	padding: 0.8rem;
+	font-size: clamp(0.8rem, 3vw + 1rem, 1rem);
+}
+
+input:focus {
+	outline: none;
+	box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.1);
+	border-color: #4299e1;
+}
+
+.password-label {
+	margin-top: 1em;
+}
+
+.forgot-pass {
+	margin-top: 0.5em;
+	margin-bottom: 0.8em;
+	margin-left: auto;
+	width: fit-content;
+	font-weight: 500;
+	font-size: clamp(0.5rem, 2vw + 0.5rem, 1rem);
+	text-align: right;
+}
+
+.buttons {
+	display: flex;
+	flex-direction: column;
+	gap: 1rem;
+	margin-top: 0.5em;
+}
+
+button {
+	transition: all 0.1s ease;
+	cursor: pointer;
+	border: none;
+	border-radius: 1rem;
+	background: var(--primary-color);
+	padding: 0.8em 1.5em;
+	color: white;
+	font-weight: 600;
+	font-size: clamp(0.8rem, 3vw + 1rem, 1.25rem);
+}
+
+button:hover {
+	background: rgb(2, 25, 100);
+}
+
+button:focus {
+	outline: none;
+	border: 1px solid rgb(0, 16, 68);
+}
+
+p {
+	font-size: clamp(0.5rem, 2vw + 0.5rem, 1.125rem);
+	text-align: center;
+}
+
+a {
+	color: var(--primary-color);
+	font-weight: 500;
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+@media (width <= 26.5625rem) {
+	.container {
+		margin: 1em;
+	}
+}
+
+.password-label {
+	margin-top: 1em;
+}
+
+.email-container,
+.password-container {
+	position: relative;
+	width: 100%;
+}
+
+.email-container input,
+.password-container input {
+	width: 100%;
+}
+
+.email-input,
+.password-input {
+	padding-left: 2rem;
+}
+
+.email-icon,
+.password-icon {
+	position: absolute;
+	top: 50%;
+	left: 10px;
+	transform: translateY(-50%);
+	opacity: 0.8;
+	width: 20px;
+	height: auto;
+}
+
+.hidden {
+	display: none;
+}
+
+.error-message {
+	margin-top: 0.5em;
+	color: red;
+	font-weight: 600;
+	font-size: 0.9rem;
+	font-size: clamp(0.5rem, 2vw + 0.5rem, 1.125rem);
+	text-align: center;
+}
+
+.forgot-pass:focus,
+.register:focus {
+	outline: none;
+	color: var(--primary-color);
+	text-decoration: underline;
+}
