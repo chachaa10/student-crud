@@ -19,6 +19,7 @@
 					<p class="big-label">Full Name</p>
 					<div class="name-group">
 						<div class="form-group gap">
+							<label for="first-name " class="required">First Name</label>
 							<input
 								type="text"
 								name="first_name"
@@ -26,18 +27,19 @@
 								required
 								autocapitalize="words"
 								autocomplete="given-name" />
-							<label for="first-name " class="required">First Name</label>
+							<span id="firstNameError"></span>
 						</div>
 						<div class="form-group gap">
+							<label for="middle-name">Middle Name (Optional)</label>
 							<input
 								type="text"
 								name="middle_name"
 								id="middle-name"
-								autocapitalize="words"
-								autocomplete="additional-name" />
-							<label for="middle-name">Middle Name (Optional)</label>
+								autocapitalize="words" />
+							<span id="middleNameError"></span>
 						</div>
 						<div class="form-group gap">
+							<label for="last-name" class="required">Last Name</label>
 							<input
 								type="text"
 								name="last_name"
@@ -45,7 +47,7 @@
 								autocapitalize="words"
 								autocomplete="family-name"
 								required />
-							<label for="last-name" class="required">Last Name</label>
+							<span id="lastNameError"></span>
 						</div>
 					</div>
 
@@ -59,15 +61,19 @@
 								autocomplete="bday"
 								class="date-input"
 								required />
+							<span id="birthdateError"></span>
 						</div>
 						<div class="form-group gender gap">
-							<label for="gender" class="big-label gender-label required">Gender</label>
+							<label for="gender" class="big-label gender-label required"
+								>Gender</label
+							>
 							<select name="gender" id="gender" class="gender">
 								<option value="" disabled selected>-- Please Select --</option>
 								<option value="male">Male</option>
 								<option value="female">Female</option>
 								<option value="other">Prefer not to say</option>
 							</select>
+							<span id="genderError"></span>
 						</div>
 						<div class="form-group gap">
 							<label for="email" class="big-label required">Email Address</label>
@@ -78,28 +84,32 @@
 								autocomplete="email"
 								placeholder="ex. myname@example.com"
 								required />
+							<span id="emailError"></span>
 						</div>
 						<div class="form-group gap">
-							<label for="mobile-number" class="big-label required">Mobile Number</label>
+							<label for="mobile-number" class="big-label required"
+								>Mobile Number</label
+							>
 							<input
 								type="tel"
 								inputmode="numeric"
 								name="mobile_number"
 								id="mobile-number"
 								autocomplete="tel"
-								pattern="09[0-9]{9}"
 								minlength="11"
 								maxlength="11"
 								title="Please enter a valid Philippine mobile number"
-								placeholder="ex. 09xxxxxxxxx"
+								placeholder="ex. 09123456789"
 								required />
+							<span id="mobileNumberError"></span>
 						</div>
 					</div>
 
-					<div class="form-group gap address">
+					<div class="form-group address">
 						<legend class="information">Address Information</legend>
 						<div class="address-container">
 							<div class="street-address">
+								<label for="street-address" class="required">Street Address</label>
 								<input
 									type="text"
 									name="street_address"
@@ -107,9 +117,10 @@
 									required
 									autocapitalize="words"
 									autocomplete="street-address" />
-								<label for="street-address" class="gap required">Street Address</label>
+								<span id="streetAddressError"></span>
 							</div>
 							<div class="city">
+								<label for="city" class="required">City</label>
 								<input
 									type="text"
 									name="city"
@@ -117,9 +128,10 @@
 									required
 									autocapitalize="words"
 									autocomplete="address-level2" />
-								<label for="city" class="gap required">City</label>
+								<span id="cityError"></span>
 							</div>
 							<div class="state">
+								<label for="state" class="required">State / Province</label>
 								<input
 									type="text"
 									name="state"
@@ -127,9 +139,10 @@
 									required
 									autocapitalize="words"
 									autocomplete="address-level1" />
-								<label for="state" class="gap required">State / Province</label>
+								<span id="stateError"></span>
 							</div>
 							<div class="zip">
+								<label for="zip-code" class="required">Postal / Zip Code</label>
 								<input
 									type="text"
 									name="zip_code"
@@ -138,7 +151,7 @@
 									minlength="4"
 									maxlength="7"
 									required />
-								<label for="zip-code" class="gap required">Postal / Zip Code</label>
+								<span id="zipCodeError"></span>
 							</div>
 						</div>
 					</div>
@@ -152,11 +165,12 @@
 							type="number"
 							inputmode="numeric"
 							name="student_id"
-							id="student-id"
-							placeholder="ex. 20251234"
 							minlength="8"
 							maxlength="8"
+							id="student-id"
+							placeholder="ex. 20251234"
 							required />
+						<span id="studentIdError"></span>
 					</div>
 
 					<div class="form-group gap">
@@ -169,8 +183,9 @@
 							<option value="bsba">BS Business Administration</option>
 							<option value="bsce">BS Civil Engineering</option>
 							<option value="bscrim">BS Criminology</option>
-							<option value="bael">Bachelor of Arts in English Language (AB English)</option>
-
+							<option value="bael">
+								Bachelor of Arts in English Language (AB English)
+							</option>
 							<option value="bshrm">BS Hotel and Restaurant Management</option>
 							<option value="bshm">BS Hospitality Management</option>
 							<option value="bsis">BS Information Systems</option>
@@ -179,6 +194,7 @@
 							<option value="bsed">Bachelor of Secondary Education</option>
 							<option value="bped">Bachelor of Physical Education</option>
 						</select>
+						<span id="courseError"></span>
 					</div>
 
 					<div class="form-group gap">
@@ -190,6 +206,7 @@
 							<option value="3">3rd Year</option>
 							<option value="4">4th Year</option>
 						</select>
+						<span id="yearLevelError"></span>
 					</div>
 
 					<div class="form-group gap">
@@ -199,11 +216,11 @@
 							name="password"
 							id="password"
 							minlength="6"
-							pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}"
 							aria-describedby="password-requirements"
 							required />
 						<p class="password-info" id="password-requirements">
-							Password must contain at least: 6 characters, 1 uppercase, 1 lowercase, and 1 number
+							Password must contain at least: 6 characters, 1 uppercase, 1 lowercase,
+							and 1 number
 						</p>
 					</div>
 				</fieldset>
