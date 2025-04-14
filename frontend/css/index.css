@@ -165,3 +165,8 @@ a:hover {
 	color: var(--primary-color);
 	text-decoration: underline;
 }
+
+.error-input {
+	box-shadow: 0 0 0 2px red;
+	border-color: 1px solid red;
+}

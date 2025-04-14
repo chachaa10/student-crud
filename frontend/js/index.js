@@ -50,8 +50,17 @@ document.addEventListener("DOMContentLoaded", () => {
 			window.location.href = "dashboard.html";
 		} catch (error) {
 			console.error("Login error:", error);
+			emailInput.classList.add("error-input");
+			passwordInput.classList.add("error-input");
 			loginErrorMessage.textContent = "Invalid Email or Password";
-			setTimeout(() => (loginErrorMessage.textContent = ""), 3000);
+			setTimeout(
+				() => (
+					(loginErrorMessage.textContent = ""),
+					emailInput.classList.remove("error-input"),
+					passwordInput.classList.remove("error-input")
+				),
+				3000
+			);
 		}
 	}
 });
