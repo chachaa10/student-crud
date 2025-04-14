@@ -45,8 +45,8 @@ document.addEventListener("DOMContentLoaded", () => {
 			tbody.insertAdjacentHTML(
 				"beforeend",
 				`
-	  <tr>
-	    <td colspan="6" class="no-data" style="text-align:center">
+	  <tr role="row">
+	    <td role="cell" colspan="6" class="no-data" style="text-align:center">
 	      No matching records
 	    </td>
 	  </tr>
@@ -62,8 +62,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
 		if (!students.length) {
 			tbody.innerHTML = `
-        <tr role="row>
-          <td role="cell" colspan="6" style="text-align:center" class="no-data">No data</td>
+        <tr role="row">
+          <td role="cell" colspan="6" class="no-data">No data</td>
         </tr>
       `;
 			body.classList.remove("hidden");
