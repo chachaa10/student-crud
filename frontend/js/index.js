@@ -1,47 +1,57 @@
 document.addEventListener("DOMContentLoaded", () => {
-	// Redirect if already logged in
 	const studentId = sessionStorage.getItem("studentId");
 	const adminId = sessionStorage.getItem("adminId");
+
+	// Redirect logged-in users
 	if (studentId) return (window.location.href = "dashboard.html");
 	if (adminId) return (window.location.href = "admin.html");
 
-	const body = document.getElementById("mainContent");
-	const form = document.getElementById("loginForm");
-	const loginError = document.getElementById("loginError");
+	// Get DOM elements
+	const mainContent = document.getElementById("mainContent");
+	const loginForm = document.getElementById("loginForm");
+	const loginErrorMessage = document.getElementById("loginError");
 
-	// show form
-	body.classList.remove("hidden");
+	// Make the login form visible
+	mainContent.classList.remove("hidden");
 
-	form.addEventListener("submit", async (e) => {
-		e.preventDefault();
-		loginError.textContent = "";
+	// Login functionality
+	loginForm.addEventListener("submit", handleLogin);
 
-		const email = document.getElementById("email").value.trim();
-		const password = document.getElementById("password").value;
+	async function handleLogin(event) {
+		event.preventDefault();
+		loginErrorMessage.textContent = "";
 
-		// Admin credentials
+		const emailInput = document.getElementById("email");
+		const passwordInput = document.getElementById("password");
+		const email = emailInput.value.trim();
+		const password = passwordInput.value;
+
+		// Check for admin login
 		if (email === "admin@admin.com" && password === "Admin123") {
 			sessionStorage.setItem("adminId", "true");
-			return (window.location.href = "admin.html");
+			window.location.href = "admin.html";
+			return;
 		}
 
-		// Student login
 		try {
-			const res = await fetch("/api/students/login", {
+			const response = await fetch("/api/students/login", {
 				method: "POST",
 				headers: { "Content-Type": "application/json" },
 				body: JSON.stringify({ email, password }),
 			});
-			const data = await res.json();
 
-			if (!res.ok) throw new Error(data.error || "Login failed");
+			const data = await response.json();
+
+			if (!response.ok) {
+				throw new Error(data.error || "Login failed");
+			}
 
 			sessionStorage.setItem("studentId", data.student.student_id);
 			window.location.href = "dashboard.html";
-		} catch (err) {
-			console.error("Login error:", err);
-			loginError.textContent = "Invalid Email or Password";
-			setTimeout(() => (loginError.textContent = ""), 3000);
+		} catch (error) {
+			console.error("Login error:", error);
+			loginErrorMessage.textContent = "Invalid Email or Password";
+			setTimeout(() => (loginErrorMessage.textContent = ""), 3000);
 		}
-	});
+	}
 });
