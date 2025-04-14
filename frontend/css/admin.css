@@ -412,6 +412,20 @@ h1 {
 	}
 }
 
+@media screen and (max-width: 405px){
+	td.no-data {
+		display: flex;
+		flex-direction: column;
+		padding-bottom: 1rem;
+		
+		&::before{
+			width: 100%;
+			margin-bottom: 1rem;
+		}
+	}
+	
+}
+
 @media screen and (min-width: 320px) {
 	td:nth-of-type(2) {
 		padding: 0;
