@@ -52,16 +52,22 @@
 							<legend class="information">Personal Information</legend>
 							<div class="form-group">
 								<label for="editFirstName">First Name:</label>
-								<input type="text" id="editFirstName" required name="first_name" />
+								<input
+									type="text"
+									id="editFirstName"
+									required
+									name="first_name"
+									autocapitalize="words" />
 								<span id="firstNameError"></span>
 							</div>
 							<div class="form-group">
 								<label for="editMiddleName">Middle Name:</label>
-								<input type="text" id="editMiddleName" name="middle_name" />
+								<input type="text" id="editMiddleName" name="middle_name" autocapitalize="words" />
+								<span id="middleNameError"></span>
 							</div>
 							<div class="form-group">
 								<label for="editLastName">Last Name:</label>
-								<input type="text" id="editLastName" required name="last_name" />
+								<input type="text" id="editLastName" required name="last_name" autocapitalize="words" />
 								<span id="lastNameError"></span>
 							</div>
 							<div class="form-group">
@@ -86,12 +92,18 @@
 									minlength="11"
 									maxlength="11"
 									required
+									placeholder="ex. 09123456789"
 									id="editMobileNumber" />
 								<span id="mobileNumberError"></span>
 							</div>
 							<div class="form-group">
 								<label for="editEmail">Email:</label>
-								<input type="email" id="editEmail" required name="email" />
+								<input
+									type="email"
+									id="editEmail"
+									required
+									name="email"
+									placeholder="ex. myname@example.com" />
 								<span id="emailError"></span>
 							</div>
 						</fieldset>
@@ -99,17 +111,17 @@
 							<legend class="information">Address Information</legend>
 							<div class="form-group">
 								<label for="editStreetAddress">Street Address:</label>
-								<input type="text" id="editStreetAddress" required name="street_address" />
+								<input type="text" id="editStreetAddress" required name="street_address" autocapitalize="words" />
 								<span id="streetAddressError"></span>
 							</div>
 							<div class="form-group">
 								<label for="editCity">City:</label>
-								<input type="text" id="editCity" name="city" required />
+								<input type="text" id="editCity" name="city" required autocapitalize="words" />
 								<span id="cityError"></span>
 							</div>
 							<div class="form-group">
 								<label for="editState">State:</label>
-								<input type="text" id="editState" minlength="3" required name="state" />
+								<input type="text" id="editState" minlength="3" required name="state" autocapitalize="words" />
 								<span id="stateError"></span>
 							</div>
 							<div class="form-group">
@@ -124,6 +136,7 @@
 								<span id="zipCodeError"></span>
 							</div>
 						</fieldset>
+
 						<fieldset class="student-info">
 							<legend class="information">Student Information</legend>
 							<input

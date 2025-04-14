@@ -167,8 +167,8 @@ dialog {
 .no-data {
 	font-weight: 600;
 	font-size: 1.5rem;
-	text-transform: uppercase;
 	text-align: center;
+	text-transform: uppercase;
 }
 
 .edit-modal {
@@ -271,6 +271,17 @@ span {
 	color: red;
 	font-weight: 500;
 	font-size: clamp(0.6rem, 1vw + 0.6rem, 1rem);
+	text-wrap: pretty;
+}
+
+.error-input {
+	border: 1px solid red 
+}
+
+.error-message {
+	margin-top: 5px;
+	color: red;
+	font-size: 0.8em; 
 }
 
 .search-input {

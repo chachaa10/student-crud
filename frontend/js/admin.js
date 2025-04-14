@@ -1,30 +1,67 @@
 document.addEventListener("DOMContentLoaded", () => {
-	// Redirect if not admin
-	const adminId = sessionStorage.getItem("adminId");
-	if (!adminId) return (window.location.href = "index.html");
+	// Redirect non-admins
+	function checkAdmin() {
+		const adminId = sessionStorage.getItem("adminId");
+		if (!adminId) window.location.href = "index.html";
+	}
 
+	// DOM Elements
 	const body = document.getElementById("mainContent");
 	const tbody = document.getElementById("studentsList");
-
-	// Logout
 	const logoutButton = document.getElementById("logoutButton");
-	logoutButton.addEventListener("click", () => {
+	const searchInput = document.getElementById("searchInput");
+
+	// Modals
+	const deleteModal = document.getElementById("deleteModal");
+	const confirmDeleteButton = document.getElementById("confirmDelete");
+	const cancelDeleteButton = document.getElementById("cancelDelete");
+	const editModal = document.getElementById("editModal");
+	const closeEditModalButton = document.getElementById("closeEditModal");
+	const editForm = document.getElementById("editForm");
+	const saveEditModalButton = document.getElementById("saveEditModal");
+	const editModalError = document.getElementById("editModalError");
+
+	// Input fields in the edit form
+	const editFirstNameInput = document.getElementById("editFirstName");
+	const editMiddleNameInput = document.getElementById("editMiddleName");
+	const editLastNameInput = document.getElementById("editLastName");
+	const editEmailInput = document.getElementById("editEmail");
+	const editStreetAddressInput = document.getElementById("editStreetAddress");
+	const editCityInput = document.getElementById("editCity");
+	const editStateInput = document.getElementById("editState");
+	const editZipCodeInput = document.getElementById("editZipCode");
+	const editMobileNumberInput = document.getElementById("editMobileNumber");
+	const editBirthdateInput = document.getElementById("editBirthdate");
+
+	// Validation Error Messages
+	const firstNameErrMsg = document.getElementById("firstNameError");
+	const middleNameErrMsg = document.getElementById("middleNameError");
+	const lastNameErrMsg = document.getElementById("lastNameError");
+	const emailErrMsg = document.getElementById("emailError");
+	const streetAddressErrMsg = document.getElementById("streetAddressError");
+	const cityErrMsg = document.getElementById("cityError");
+	const stateErrMsg = document.getElementById("stateError");
+	const zipCodeErrMsg = document.getElementById("zipCodeError");
+	const mobileNumberErrMsg = document.getElementById("mobileNumberError");
+	const birthdateErrMsg = document.getElementById("birthdateError");
+	const generalErrorMsg = document.getElementById("editError");
+
+	function handleLogout() {
 		sessionStorage.removeItem("adminId");
 		location.href = "login.html";
-	});
+	}
 
-	// Search Filter
-	const searchInput = document.getElementById("searchInput");
-	searchInput.addEventListener("input", () => {
+	// Search Functionality
+	function filterStudents() {
 		const term = searchInput.value.trim().toLowerCase();
-		const keywords = term.split(/\s+/); // split by space
+		const keywords = term.split(/\s+/);
+		const noDataRow = tbody.querySelector(".no-data");
 
-		const old = tbody.querySelector(".no-data");
-		if (old) old.remove();
+		if (noDataRow) noDataRow.remove();
 
 		const rows = tbody.querySelectorAll("tr");
 		if (!term) {
-			rows.forEach((r) => (r.style.display = ""));
+			rows.forEach((row) => (row.style.display = ""));
 			return;
 		}
 
@@ -32,33 +69,70 @@ document.addEventListener("DOMContentLoaded", () => {
 		rows.forEach((row) => {
 			const text = row.textContent.toLowerCase();
 			const matchesAll = keywords.every((kw) => text.includes(kw));
-
-			if (matchesAll) {
-				row.style.display = "";
-				anyVisible = true;
-			} else {
-				row.style.display = "none";
-			}
+			row.style.display = matchesAll ? "" : "none";
+			if (matchesAll) anyVisible = true;
 		});
 
 		if (!anyVisible) {
 			tbody.insertAdjacentHTML(
 				"beforeend",
 				`
-	  <tr role="row">
-	    <td role="cell" colspan="6" class="no-data" style="text-align:center">
-	      No matching records
-	    </td>
-	  </tr>
-	`
+          <tr role="row">
+            <td role="cell" colspan="6" class="no-data" style="text-align:center">
+              No matching records
+            </td>
+          </tr>
+        `
 			);
 		}
-	});
+	}
 
-	// Load students
+	/**
+	 *
+	 * @param {Object} student - Object containing student data
+	 * @returns
+	 */
+	function generateStudentRow(student) {
+		const {
+			student_id = "No data",
+			first_name = "No data",
+			middle_name = "",
+			last_name = "No data",
+			email = "No data",
+			course = "No data",
+			year_level,
+		} = student;
+
+		const formattedCourse = course ? course.toUpperCase() : "No data";
+		const formattedYearLevel =
+			year_level === 4
+				? "4th Year"
+				: year_level === 3
+				? "3rd Year"
+				: year_level === 2
+				? "2nd Year"
+				: year_level === 1
+				? "1st Year"
+				: "No data";
+
+		return `
+      <tr role="row">
+        <td role="cell"><strong>${student_id}</strong></td>
+        <td role="cell">${last_name}, ${first_name} ${middle_name ? " " + middle_name : ""}</td>
+        <td role="cell">${email}</td>
+        <td role="cell">${formattedCourse}</td>
+        <td role="cell">${formattedYearLevel}</td>
+        <td class="action-buttons" role="cell">
+          <button class="edit-btn" data-student-id="${student_id}">Edit</button>
+          <button class="delete-btn" data-student-id="${student_id}">Delete</button>
+        </td>
+      </tr>
+    `;
+	}
+
 	async function loadStudents() {
-		const res = await fetch("/api/students");
-		const students = res.ok ? await res.json() : [];
+		const response = await fetch("/api/students");
+		const students = response.ok ? await response.json() : [];
 
 		if (!students.length) {
 			tbody.innerHTML = `
@@ -66,59 +140,20 @@ document.addEventListener("DOMContentLoaded", () => {
           <td role="cell" colspan="6" class="no-data">No data</td>
         </tr>
       `;
-			body.classList.remove("hidden");
-			return;
+		} else {
+			tbody.innerHTML = students.map(generateStudentRow).join("");
 		}
-
-		tbody.innerHTML = students
-			.map((s) => {
-				const student_id = s.student_id ?? "No data";
-				const first_name = s.first_name ?? "No data";
-				const middle_name = s.middle_name ?? "";
-				const last_name = s.last_name ?? "No data";
-				const email = s.email ?? "No data";
-				const course = s.course ? s.course.toUpperCase() : "No data";
-				const year_level =
-					s.year_level === 4
-						? "4th Year"
-						: s.year_level === 3
-						? "3rd Year"
-						: s.year_level === 2
-						? "2nd Year"
-						: s.year_level === 1
-						? "1st Year"
-						: "No data";
-				return `
-          <tr role="row">
-            <td role="cell"><strong>${student_id}</strong></td>
-            <td role="cell">${last_name}, ${first_name} ${middle_name ? " " + middle_name : ""}</td>
-            <td role="cell">${email}</td>
-            <td role="cell">${course}</td>
-            <td role="cell">${year_level}</td>
-            <td class="action-buttons" role="cell">
-              <button class="edit-btn"   data-student-id="${student_id}">Edit</button>
-              <button class="delete-btn" data-student-id="${student_id}">Delete</button>
-            </td>
-          </tr>
-        `;
-			})
-			.join("");
-
 		body.classList.remove("hidden");
 	}
 
-	// Delete student
-	tbody.addEventListener("click", (e) => {
-		e.preventDefault();
+	// Delete Functionality
+	function handleDeleteClick(e) {
 		if (!e.target.classList.contains("delete-btn")) return;
 		const studentId = e.target.dataset.studentId;
-		const deleteModal = document.getElementById("deleteModal");
 		deleteModal.showModal();
 
-		document.getElementById("cancelDelete").onclick = () => {
-			deleteModal.close();
-		};
-		document.getElementById("confirmDelete").onclick = async () => {
+		cancelDeleteButton.onclick = () => deleteModal.close();
+		confirmDeleteButton.onclick = async () => {
 			const studentData = await fetch(`/api/students/${studentId}`, { method: "DELETE" });
 			if (studentData.ok) {
 				deleteModal.close();
@@ -127,27 +162,13 @@ document.addEventListener("DOMContentLoaded", () => {
 				console.error("Delete failed", studentData.status);
 			}
 		};
-	});
+	}
 
-	// Populate edit form
-	tbody.addEventListener("click", async (e) => {
-		e.preventDefault();
-		if (!e.target.classList.contains("edit-btn")) return;
-		const editModal = document.getElementById("editModal");
-		editModal.showModal();
-
-		document.getElementById("closeEditModal").onclick = () => {
-			document.getElementById("editForm").reset();
-			editModal.close();
-		};
-
-		const studentId = e.target.dataset.studentId;
-
+	async function populateEditForm(studentId) {
 		try {
-			// Fetch student data
-			const res = await fetch(`/api/students/${studentId}`);
-			if (!res.ok) throw new Error("Failed to fetch student data");
-
+			const response = await fetch(`/api/students/${studentId}`);
+			if (!response.ok) throw new Error("Failed to fetch student data");
+			const studentData = await response.json();
 			const {
 				first_name,
 				middle_name,
@@ -162,9 +183,8 @@ document.addEventListener("DOMContentLoaded", () => {
 				year_level,
 				birthdate,
 				mobile_number,
-			} = await res.json();
+			} = studentData;
 
-			// Populate form fields
 			document.getElementById("editFirstName").value = first_name;
 			document.getElementById("editMiddleName").value = middle_name || "";
 			document.getElementById("editLastName").value = last_name;
@@ -173,224 +193,222 @@ document.addEventListener("DOMContentLoaded", () => {
 			document.getElementById("editCity").value = city;
 			document.getElementById("editState").value = state;
 			document.getElementById("editZipCode").value = zip_code;
-
-			// Convert birthdate to YYYY-MM-DD format
-			const birthdateObj = new Date(birthdate);
-			const birthdateISO = birthdateObj.toISOString().split("T")[0];
-			document.getElementById("editBirthdate").value = birthdateISO;
+			document.getElementById("editBirthdate").value = new Date(birthdate).toISOString().split("T")[0];
 			document.getElementById("editStudentID").value = student_id;
 			document.getElementById("course").value = course;
 			document.getElementById("editYearLevel").value = year_level;
 			document.getElementById("editMobileNumber").value = mobile_number;
 
 			editModal.showModal();
+			editModalError.textContent = "";
+			clearValidationErrors(); // Clear previous errors when opening
+			resetInputStyles(); // Reset any previous error styles
 		} catch (error) {
 			console.error("Error loading student data:", error);
-			document.getElementById("editModalError").textContent = "Failed to load student data";
+			editModalError.textContent = "Failed to load student data";
 			editModal.showModal();
 		}
-	});
+	}
 
-	// Update student
-	const updateBtn = document.getElementById("saveEditModal");
-	updateBtn.addEventListener("click", async (e) => {
+	function handleEditClick(e) {
+		if (!e.target.classList.contains("edit-btn")) return;
+		const studentId = e.target.dataset.studentId;
+		populateEditForm(studentId);
+	}
+
+	function closeEditModal() {
+		editForm.reset();
+		editModal.close();
+		clearValidationErrors();
+		resetInputStyles();
+	}
+
+	function clearValidationErrors() {
+		firstNameErrMsg.textContent = "";
+		middleNameErrMsg.textContent = "";
+		lastNameErrMsg.textContent = "";
+		emailErrMsg.textContent = "";
+		streetAddressErrMsg.textContent = "";
+		cityErrMsg.textContent = "";
+		stateErrMsg.textContent = "";
+		zipCodeErrMsg.textContent = "";
+		mobileNumberErrMsg.textContent = "";
+		birthdateErrMsg.textContent = "";
+		generalErrorMsg.textContent = "";
+		resetInputStyles();
+	}
+
+	function resetInputStyles() {
+		const inputs = editForm.querySelectorAll("input");
+		inputs.forEach((input) => input.classList.remove("error-input"));
+	}
+
+	function displayValidationError(element, message) {
+		element.textContent = message;
+		const inputField = element.previousElementSibling; // Assuming the input is the previous sibling
+		if (inputField && inputField.tagName === "INPUT") {
+			inputField.classList.add("error-input");
+		}
+	}
+
+	function validateInput(inputField, errorElement) {
+		const name = inputField.name;
+		const value = inputField.value.trim();
+		errorElement.textContent = "";
+		inputField.classList.remove("error-input");
+		let errorMessage = "";
+
+		switch (name) {
+			case "first_name":
+				if (!value) errorMessage = "First name is required";
+				else if (value.length < 3 || !/^[A-Za-z\s]+$/.test(value))
+					errorMessage = "First name must be at least 3 characters and contain only letters and spaces";
+				break;
+			case "middle_name":
+				if (value && (value.length < 3 || !/^[A-Za-z\s]+$/.test(value)))
+					errorMessage = "Middle name must be at least 3 characters and contain only letters and spaces";
+				break;
+			case "last_name":
+				if (!value) errorMessage = "Last name is required";
+				else if (value.length < 3 || !/^[A-Za-z\s]+$/.test(value))
+					errorMessage = "Last name must be at least 3 characters and contain only letters and spaces";
+				break;
+			case "email":
+				if (!value) errorMessage = "Email is required";
+				else if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(value))
+					errorMessage = "Invalid email format (ex. myname@example.com)";
+				break;
+			case "birthdate":
+				if (!value) errorMessage = "Birthdate is required";
+				else if (!/^\d{4}-\d{2}-\d{2}$/.test(value)) errorMessage = "Invalid birthdate format";
+				break;
+			case "mobile_number":
+				if (!value) errorMessage = "Mobile number is required";
+				else if (!/^09[0-9]{9}$/.test(value))
+					errorMessage = "Invalid Philippine mobile number (eg. 09123456789)";
+				break;
+			case "street_address":
+				if (!value) errorMessage = "Street address is required";
+				else if (!/^[A-Za-z0-9\s.,#-]+$/.test(value) || value.length < 5)
+					errorMessage = "Street address must be at least 5 characters and contain valid characters";
+				break;
+			case "city":
+				if (!value) errorMessage = "City is required";
+				else if (!/^[A-Za-z\s]+$/.test(value) || value.length < 3)
+					errorMessage = "City must be at least 3 characters and contain only letters and spaces";
+				break;
+			case "state":
+				if (!value) errorMessage = "State is required";
+				else if (!/^[A-Za-z\s]+$/.test(value) || value.length < 3)
+					errorMessage = "State must be at least 3 characters and contain only letters and spaces";
+				break;
+			case "zip_code":
+				if (!value) errorMessage = "Zip code is required";
+				else if (value.length < 4) errorMessage = "Invalid zip code format";
+				break;
+		}
+
+		if (errorMessage) {
+			displayValidationError(errorElement, errorMessage);
+			return false;
+		}
+		return true;
+	}
+
+	async function handleUpdateStudent(e) {
 		e.preventDefault();
-
-		const editModal = document.getElementById("editModal");
-		const form = document.getElementById("editForm");
-		const formData = new FormData(form);
+		const formData = new FormData(editForm);
 		const studentInputForm = Object.fromEntries(formData.entries());
 		const studentId = studentInputForm.student_id;
+		let isFormValid = true;
 
-		// Validation
-		const firstNameErrMsg = document.getElementById("firstNameError");
-		const lastNameErrMsg = document.getElementById("lastNameError");
-		const emailErrMsg = document.getElementById("emailError");
-		const streetAddressErrMsg = document.getElementById("streetAddressError");
-		const cityErrMsg = document.getElementById("cityError");
-		const stateErrMsg = document.getElementById("stateError");
-		const zipCodeErrMsg = document.getElementById("zipCodeError");
-		const mobileNumberErrMsg = document.getElementById("mobileNumberError");
-		const birthdateErrMsg = document.getElementById("birthdateError");
+		// Perform instant validation before submitting
+		isFormValid = validateInput(editFirstNameInput, firstNameErrMsg) && isFormValid;
+		isFormValid = validateInput(editMiddleNameInput, middleNameErrMsg) && isFormValid;
+		isFormValid = validateInput(editLastNameInput, lastNameErrMsg) && isFormValid;
+		isFormValid = validateInput(editEmailInput, emailErrMsg) && isFormValid;
+		isFormValid = validateInput(editStreetAddressInput, streetAddressErrMsg) && isFormValid;
+		isFormValid = validateInput(editCityInput, cityErrMsg) && isFormValid;
+		isFormValid = validateInput(editStateInput, stateErrMsg) && isFormValid;
+		isFormValid = validateInput(editZipCodeInput, zipCodeErrMsg) && isFormValid;
+		isFormValid = validateInput(editMobileNumberInput, mobileNumberErrMsg) && isFormValid;
+		isFormValid = validateInput(editBirthdateInput, birthdateErrMsg) && isFormValid;
 
-		// Form validation
-		let countError = 0;
-		function isValidForm() {
-			if (!studentInputForm.first_name) {
-				firstNameErrMsg.textContent = "First name is required";
-				countError++;
-			} else if (!studentInputForm.first_name.length > 3 || !studentInputForm.first_name.match(/^[A-Za-z\s]+$/)) {
-				firstNameErrMsg.textContent =
-					"First name must be at least 3 characters and contain only letters and spaces";
-				countError++;
-			}
-
-			if (!studentInputForm.last_name) {
-				lastNameErrMsg.textContent = "Last name is required";
-				countError++;
-			} else if (!studentInputForm.last_name.length > 3 || !studentInputForm.last_name.match(/^[A-Za-z\s]+$/)) {
-				lastNameErrMsg.textContent =
-					"Last name must be at least 3 characters and contain only letters and spaces";
-				countError++;
-			}
-
-			if (!studentInputForm.email) {
-				emailErrMsg.textContent = "Email is required";
-				countError++;
-			} else if (!studentInputForm.email.match(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/)) {
-				emailErrMsg.textContent = "Invalid email format";
-				countError++;
-			}
-
-			if (!studentInputForm.birthdate) {
-				birthdateErrMsg.textContent = "Birthdate is required";
-				countError++;
-			} else if (!studentInputForm.birthdate.match(/^\d{4}-\d{2}-\d{2}$/)) {
-				birthdateErrMsg.textContent = "Invalid birthdate format";
-				countError++;
-			}
-
-			if (!studentInputForm.mobile_number) {
-				mobileNumberErrMsg.textContent = "Mobile number is required";
-				countError++;
-			} else if (!studentInputForm.mobile_number.match(/^09[0-9]{9}$/)) {
-				mobileNumberErrMsg.textContent = "Invalid Philippine mobile number";
-				countError++;
-			}
-
-			if (!studentInputForm.street_address) {
-				streetAddressErrMsg.textContent = "Street address is required";
-				countError++;
-			} else if (!studentInputForm.street_address.match(/^[A-Za-z0-9\s.,#-]+$/)) {
-				streetAddressErrMsg.textContent = "Invalid street address format";
-				countError++;
-			} else if (!studentInputForm.street_address.length > 5) {
-				streetAddressErrMsg.textContent = "Street address must be at least 5 characters";
-				countError++;
-			}
-
-			if (!studentInputForm.city) {
-				cityErrMsg.textContent = "City is required";
-				countError++;
-			} else if (!studentInputForm.city.match(/^[A-Za-z\s]+$/)) {
-				cityErrMsg.textContent = "Invalid city format";
-				countError++;
-			} else if (!studentInputForm.city.length > 3) {
-				cityErrMsg.textContent = "City must be at least 3 characters";
-				countError++;
-			}
-
-			if (!studentInputForm.state) {
-				stateErrMsg.textContent = "State is required";
-				countError++;
-			} else if (!studentInputForm.state.match(/^[A-Za-z\s]+$/)) {
-				stateErrMsg.textContent = "Invalid state format";
-				countError++;
-			} else if (!studentInputForm.state.length > 3) {
-				stateErrMsg.textContent = "State must be at least 3 characters";
-				countError++;
-			}
-
-			if (!studentInputForm.zip_code) {
-				zipCodeErrMsg.textContent = "Zip code is required";
-				countError++;
-			} else if (studentInputForm.zip_code.length < 4 || studentInputForm.zip_code.length > 7) {
-				zipCodeErrMsg.textContent = "Invalid zip code format";
-				countError++;
-			}
-		}
-		isValidForm();
-
-		const err = document.getElementById("editError");
-		function clearError() {
-			firstNameErrMsg.textContent = "";
-			lastNameErrMsg.textContent = "";
-			emailErrMsg.textContent = "";
-			streetAddressErrMsg.textContent = "";
-			cityErrMsg.textContent = "";
-			stateErrMsg.textContent = "";
-			zipCodeErrMsg.textContent = "";
-			mobileNumberErrMsg.textContent = "";
-			birthdateErrMsg.textContent = "";
-			err.textContent = "";
-		}
-
-		if (countError > 0) {
-			err.textContent = "Invalid input";
-
-			setTimeout(() => {
-				clearError();
-				countError = 0;
-			}, 15000);
-
+		if (!isFormValid) {
+			generalErrorMsg.textContent = "Please correct the invalid fields.";
+			setTimeout(() => (generalErrorMsg.textContent = ""), 5000);
 			return;
 		}
 
-		const res = await fetch(`/api/students/${studentId}`, {
+		const response = await fetch(`/api/students/${studentId}`, {
 			method: "PUT",
 			headers: { "Content-Type": "application/json" },
-			body: JSON.stringify({
-				first_name: studentInputForm.first_name,
-				middle_name: studentInputForm.middle_name,
-				last_name: studentInputForm.last_name,
-				email: studentInputForm.email,
-				street_address: studentInputForm.street_address,
-				city: studentInputForm.city,
-				state: studentInputForm.state,
-				zip_code: studentInputForm.zip_code,
-				course: studentInputForm.course,
-				year_level: studentInputForm.year_level,
-				birthdate: studentInputForm.birthdate,
-				mobile_number: studentInputForm.mobile_number,
-			}),
+			body: JSON.stringify(studentInputForm),
 		});
 
-		if (res.ok) {
+		if (response.ok) {
 			editModal.close();
-			loadStudents(); // refresh the table
+			loadStudents();
 		} else {
-			const err = await res.text();
-			document.getElementById("editModalError").textContent = "Update failed: " + err;
+			const error = await response.text();
+			editModalError.textContent = "Update failed: " + error;
 		}
-	});
+	}
 
-	function AddTableARIA() {
+	// Accessibility
+	function addTableARIA() {
 		try {
-			var allTables = document.querySelectorAll("table");
-			for (var i = 0; i < allTables.length; i++) {
-				allTables[i].setAttribute("role", "table");
-			}
-			var allCaptions = document.querySelectorAll("caption");
-			for (var i = 0; i < allCaptions.length; i++) {
-				allCaptions[i].setAttribute("role", "caption");
-			}
-			var allRowGroups = document.querySelectorAll("thead, tbody, tfoot");
-			for (var i = 0; i < allRowGroups.length; i++) {
-				allRowGroups[i].setAttribute("role", "rowgroup");
-			}
-			var allRows = document.querySelectorAll("tr");
-			for (var i = 0; i < allRows.length; i++) {
-				allRows[i].setAttribute("role", "row");
-			}
-			var allCells = document.querySelectorAll("td");
-			for (var i = 0; i < allCells.length; i++) {
-				allCells[i].setAttribute("role", "cell");
-			}
-			var allHeaders = document.querySelectorAll("th");
-			for (var i = 0; i < allHeaders.length; i++) {
-				allHeaders[i].setAttribute("role", "columnheader");
-			}
-			// this accounts for scoped row headers
-			var allRowHeaders = document.querySelectorAll("th[scope=row]");
-			for (var i = 0; i < allRowHeaders.length; i++) {
-				allRowHeaders[i].setAttribute("role", "rowheader");
-			}
+			document.querySelectorAll("table").forEach((table) => table.setAttribute("role", "table"));
+			document.querySelectorAll("caption").forEach((caption) => caption.setAttribute("role", "caption"));
+			document.querySelectorAll("thead, tbody, tfoot").forEach((group) => group.setAttribute("role", "rowgroup"));
+			document.querySelectorAll("tr").forEach((row) => row.setAttribute("role", "row"));
+			document.querySelectorAll("td").forEach((cell) => cell.setAttribute("role", "cell"));
+			document.querySelectorAll("th").forEach((header) => header.setAttribute("role", "columnheader"));
+			document
+				.querySelectorAll("th[scope=row]")
+				.forEach((rowHeader) => rowHeader.setAttribute("role", "rowheader"));
 		} catch (e) {
 			console.log("AddTableARIA(): " + e);
 		}
 	}
 
-	AddTableARIA();
+	/**
+	 * @param {string} str - String to capitalize
+	 * @returns {string} Capitalized string
+	 */
+	function capitalizeWords(str) {
+		return str.replace(/\b\w/g, (char) => char.toUpperCase());
+	}
 
+	// Capitalize input values on blur for elements with the autocapitalize attribute
+	document.querySelectorAll("input[autocapitalize]").forEach((input) => {
+		input.addEventListener("blur", function () {
+			this.value = capitalizeWords(this.value);
+		});
+	});
+
+	// Event Listeners for Instant Validation
+	editFirstNameInput.addEventListener("blur", () => validateInput(editFirstNameInput, firstNameErrMsg));
+	editMiddleNameInput.addEventListener("blur", () => validateInput(editMiddleNameInput, middleNameErrMsg));
+	editLastNameInput.addEventListener("blur", () => validateInput(editLastNameInput, lastNameErrMsg));
+	editEmailInput.addEventListener("blur", () => validateInput(editEmailInput, emailErrMsg));
+	editStreetAddressInput.addEventListener("blur", () => validateInput(editStreetAddressInput, streetAddressErrMsg));
+	editCityInput.addEventListener("blur", () => validateInput(editCityInput, cityErrMsg));
+	editStateInput.addEventListener("blur", () => validateInput(editStateInput, stateErrMsg));
+	editZipCodeInput.addEventListener("blur", () => validateInput(editZipCodeInput, zipCodeErrMsg));
+	editMobileNumberInput.addEventListener("blur", () => validateInput(editMobileNumberInput, mobileNumberErrMsg));
+	editBirthdateInput.addEventListener("blur", () => validateInput(editBirthdateInput, birthdateErrMsg));
+
+	// Event Listeners
+	checkAdmin();
+	logoutButton.addEventListener("click", handleLogout);
+	searchInput.addEventListener("input", filterStudents);
+	tbody.addEventListener("click", handleDeleteClick);
+	tbody.addEventListener("click", handleEditClick);
+	closeEditModalButton.addEventListener("click", closeEditModal);
+	saveEditModalButton.addEventListener("click", handleUpdateStudent);
+
+	// Initialization
+	addTableARIA();
 	loadStudents();
 });
