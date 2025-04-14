@@ -252,13 +252,13 @@ document.addEventListener("DOMContentLoaded", () => {
 	}
 
 	function validateInput(inputField, errorElement) {
-		const name = inputField.name;
+		const fieldName = inputField.name;
 		const value = inputField.value.trim();
 		errorElement.textContent = "";
 		inputField.classList.remove("error-input");
 		let errorMessage = "";
 
-		switch (name) {
+		switch (fieldName) {
 			case "first_name":
 				if (!value) errorMessage = "First name is required";
 				else if (value.length < 3 || !/^[A-Za-z\s]+$/.test(value))
