@@ -84,40 +84,40 @@ Follow these steps to get the project running on your local machine.
 
 ### Backend
 
-1.  Navigate to the backend directory in your project:
+1. Navigate to the backend directory in your project:
 
-    ```bash
-    cd server
-    ```
+   ```bash
+   cd server
+   ```
 
-2.  Install the backend dependencies using npm or yarn:
+2. Install the backend dependencies using npm or yarn:
 
-    ```bash
-    npm install
-    # or
-    yarn install
-    ```
+   ```bash
+   npm install
+   # or
+   yarn install
+   ```
 
-3.  **Configure MySQL:**
+3. **Configure MySQL:**
 
-    - Ensure your MySQL server is running.
-    - Create a database for the student portal (e.g., `studentportal`).
-    - Create a `.env` file in the backend directory and add your MySQL connection details:
+   - Ensure your MySQL server is running.
+   - Create a database for the student portal (e.g., `studentportal`).
+   - Create a `.env` file in the backend directory and add your MySQL connection details:
 
-      ```env
-      DB_HOST=localhost
-      DB_USER=your_mysql_username
-      DB_PASSWORD=your_mysql_password
-      DB_DATABASE=studentportal
-      ```
+     ```env
+     DB_HOST=localhost
+     DB_USER=your_mysql_username
+     DB_PASSWORD=your_mysql_password
+     DB_DATABASE=studentportal
+     ```
 
-4.  **Run Database Migrations/Setup (if applicable):**
+4. **Run Database Migrations/Setup (if applicable):**
 
-    ```bash
-    mysql -u your_mysql_username -p studentportal < schema.sql
-    ```
+   ```bash
+   mysql -u your_mysql_username -p studentportal < schema.sql
+   ```
 
-    Or, if you're using an ORM or custom scripts, follow the instructions in your backend documentation.
+   Or, if you're using an ORM or custom scripts, follow the instructions in your backend documentation.
 
 ## Project Structure
 
@@ -161,41 +161,41 @@ student-crud/
 
 ### Running the Frontend
 
-1.  Navigate to the frontend directory:
+1. Navigate to the frontend directory:
 
-    ```bash
-    cd frontend
-    ```
+   ```bash
+   cd frontend
+   ```
 
-2.  Start the Vite development server:
+2. Start the Vite development server:
 
-    ```bash
-    npm run dev
-    # or
-    yarn dev
-    ```
+   ```bash
+   npm run dev
+   # or
+   yarn dev
+   ```
 
-    This will likely start the frontend on `http://localhost:5173/` (or a similar port).
+   This will likely start the frontend on `http://localhost:5173/` (or a similar port).
 
 ### Running the Backend
 
-1.  Navigate to the backend directory:
+1. Navigate to the backend directory:
 
-    ```bash
-    cd server
-    ```
+   ```bash
+   cd server
+   ```
 
-2.  Start the Node.js server:
+2. Start the Node.js server:
 
-    ```bash
-    npm run dev
-    # or
-    yarn dev
-    ```
+   ```bash
+   npm run dev
+   # or
+   yarn dev
+   ```
 
-    Your backend server will likely run on a specified port (e.g., `http://localhost:3001`). Check your backend code for the exact port.
+   Your backend server will likely run on a specified port (e.g., `http://localhost:3001`). Check your backend code for the exact port.
 
-3.  Open your web browser and navigate to the frontend URL to interact with the student portal. Ensure your backend server is running for the frontend to communicate with the database.
+3. Open your web browser and navigate to the frontend URL to interact with the student portal. Ensure your backend server is running for the frontend to communicate with the database.
 
 ## Form Validation
 
