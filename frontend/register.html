@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Register User</title>
-        <link href="./css/default.css" rel="stylesheet">
-        <link href="./css/register.css" rel="stylesheet">
+        <link href="./css/default.css" rel="stylesheet" />
+        <link href="./css/register.css" rel="stylesheet" />
         <script src="./js/register.js" defer></script>
     </head>
     <body class="hidden" id="mainContent">
@@ -20,17 +20,29 @@
                     <div class="name-group">
                         <div class="form-group gap">
                             <label class="required" for="first-name ">First Name</label>
-                            <input id="first-name" name="first_name" type="text" required autocapitalize="words" autocomplete="given-name">
+                            <input
+                                id="first-name"
+                                name="first_name"
+                                type="text"
+                                required
+                                autocapitalize="words"
+                                autocomplete="given-name" />
                             <span id="firstNameError"></span>
                         </div>
                         <div class="form-group gap">
                             <label for="middle-name">Middle Name (Optional)</label>
-                            <input id="middle-name" name="middle_name" type="text" autocapitalize="words">
+                            <input id="middle-name" name="middle_name" type="text" autocapitalize="words" />
                             <span id="middleNameError"></span>
                         </div>
                         <div class="form-group gap">
                             <label class="required" for="last-name">Last Name</label>
-                            <input id="last-name" name="last_name" type="text" autocapitalize="words" autocomplete="family-name" required>
+                            <input
+                                id="last-name"
+                                name="last_name"
+                                type="text"
+                                autocapitalize="words"
+                                autocomplete="family-name"
+                                required />
                             <span id="lastNameError"></span>
                         </div>
                     </div>
@@ -38,7 +50,13 @@
                     <div class="personal-information">
                         <div class="form-group gap">
                             <label class="big-label required" for="birthdate">Birth Date</label>
-                            <input class="date-input" id="birthdate" name="birthdate" type="date" autocomplete="bday" required>
+                            <input
+                                class="date-input"
+                                id="birthdate"
+                                name="birthdate"
+                                type="date"
+                                autocomplete="bday"
+                                required />
                             <span id="birthdateError"></span>
                         </div>
                         <div class="form-group gender gap">
@@ -53,12 +71,28 @@
                         </div>
                         <div class="form-group gap">
                             <label class="big-label required" for="email">Email Address</label>
-                            <input id="email" name="email" type="email" autocomplete="email" placeholder="ex. myname@example.com" required>
+                            <input
+                                id="email"
+                                name="email"
+                                type="email"
+                                autocomplete="email"
+                                placeholder="ex. myname@example.com"
+                                required />
                             <span id="emailError"></span>
                         </div>
                         <div class="form-group gap">
                             <label class="big-label required" for="mobile-number">Mobile Number</label>
-                            <input id="mobile-number" name="mobile_number" type="tel" title="Please enter a valid Philippine mobile number" inputmode="numeric" autocomplete="tel" minlength="11" maxlength="11" placeholder="ex. 09123456789" required>
+                            <input
+                                id="mobile-number"
+                                name="mobile_number"
+                                type="tel"
+                                title="Please enter a valid Philippine mobile number"
+                                inputmode="numeric"
+                                autocomplete="tel"
+                                minlength="11"
+                                maxlength="11"
+                                placeholder="ex. 09123456789"
+                                required />
                             <span id="mobileNumberError"></span>
                         </div>
                     </div>
@@ -68,22 +102,47 @@
                         <div class="address-container">
                             <div class="street-address">
                                 <label class="required" for="street-address">Street Address</label>
-                                <input id="street-address" name="street_address" type="text" required autocapitalize="words" autocomplete="street-address">
+                                <input
+                                    id="street-address"
+                                    name="street_address"
+                                    type="text"
+                                    required
+                                    autocapitalize="words"
+                                    autocomplete="street-address" />
                                 <span id="streetAddressError"></span>
                             </div>
                             <div class="city">
                                 <label class="required" for="city">City</label>
-                                <input id="city" name="city" type="text" required autocapitalize="words" autocomplete="address-level2">
+                                <input
+                                    id="city"
+                                    name="city"
+                                    type="text"
+                                    required
+                                    autocapitalize="words"
+                                    autocomplete="address-level2" />
                                 <span id="cityError"></span>
                             </div>
                             <div class="state">
                                 <label class="required" for="state">State / Province</label>
-                                <input id="state" name="state" type="text" required autocapitalize="words" autocomplete="address-level1">
+                                <input
+                                    id="state"
+                                    name="state"
+                                    type="text"
+                                    required
+                                    autocapitalize="words"
+                                    autocomplete="address-level1" />
                                 <span id="stateError"></span>
                             </div>
                             <div class="zip">
                                 <label class="required" for="zip-code">Postal / Zip Code</label>
-                                <input id="zip-code" name="zip_code" type="text" autocomplete="postal-code" minlength="4" maxlength="7" required>
+                                <input
+                                    id="zip-code"
+                                    name="zip_code"
+                                    type="text"
+                                    autocomplete="postal-code"
+                                    minlength="4"
+                                    maxlength="7"
+                                    required />
                                 <span id="zipCodeError"></span>
                             </div>
                         </div>
@@ -94,7 +153,15 @@
 
                     <div class="form-group gap">
                         <label class="big-label required" for="student-id">Student Number</label>
-                        <input id="student-id" name="student_id" type="number" inputmode="numeric" minlength="8" maxlength="8" placeholder="ex. 20251234" required>
+                        <input
+                            id="student-id"
+                            name="student_id"
+                            type="number"
+                            inputmode="numeric"
+                            minlength="8"
+                            maxlength="8"
+                            placeholder="ex. 20251234"
+                            required />
                         <span id="studentIdError"></span>
                     </div>
 
@@ -134,7 +201,13 @@
 
                     <div class="form-group gap">
                         <label class="big-label required" for="password">Password</label>
-                        <input id="password" name="password" type="text" aria-describedby="password-requirements" minlength="6" required>
+                        <input
+                            id="password"
+                            name="password"
+                            type="text"
+                            aria-describedby="password-requirements"
+                            minlength="6"
+                            required />
                         <p class="password-info" id="password-requirements">
                             Password must contain at least: 6 characters, 1 uppercase, 1 lowercase, and 1 number
                         </p>
