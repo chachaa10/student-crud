@@ -1,41 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Login System | CRUD</title>
-        <link href="./css/default.css" rel="stylesheet" />
-        <link href="./css/index.css" rel="stylesheet" />
-        <script src="./js/index.js" defer></script>
-    </head>
-    <body class="hidden" id="mainContent">
-        <main class="container">
-            <section>
-                <h1>Student Portal</h1>
-                <form id="loginForm">
-                    <label for="email">Email</label>
-                    <div class="email-container">
-                        <img class="email-icon" src="./public/email_24dp_000000.svg" alt="Email Icon" />
-                        <input class="email-input" id="email" name="email" type="email" autocomplete="email" required />
-                    </div>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login System | CRUD</title>
+    <link href="./css/default.css" rel="stylesheet" />
+    <link href="./css/index.css" rel="stylesheet" />
+    <script src="./js/index.js" defer></script>
+  </head>
+  <body class="hidden" id="mainContent">
+    <main class="container">
+      <section>
+        <h1>Student Portal</h1>
+        <form id="loginForm">
+          <label for="email">Email</label>
+          <div class="email-container">
+            <img class="email-icon" src="./public/email_24dp_000000.svg" alt="Email Icon" />
+            <input class="email-input" id="email" name="email" type="email" autocomplete="email" required />
+          </div>
 
-                    <label class="password-label" for="password">Password</label>
-                    <div class="password-container">
-                        <img class="password-icon" src="./public/lock_24dp_000000.svg" alt="Password Icon" />
-                        <input class="password-input" id="password" name="password" type="password" required />
-                    </div>
-                    <div class="error-message" id="loginError"></div>
+          <label class="password-label" for="password">Password</label>
+          <div class="password-container">
+            <img class="password-icon" src="./public/lock_24dp_000000.svg" alt="Password Icon" />
+            <input class="password-input" id="password" name="password" type="password" required />
+          </div>
+          <div class="error-message" id="loginError"></div>
 
-                    <a class="forgot-pass" href="#">Forgot Password?</a>
-                    <div class="buttons">
-                        <button type="Submit">Login</button>
-                        <p>
-                            Don't have an account?
-                            <a class="register" href="register.html">Register</a>
-                        </p>
-                    </div>
-                </form>
-            </section>
-        </main>
-    </body>
+          <a class="forgot-pass" href="#">Forgot Password?</a>
+          <div class="buttons">
+            <button type="Submit">Login</button>
+            <p>
+              Don't have an account?
+              <a class="register" href="register.html">Register</a>
+            </p>
+          </div>
+        </form>
+      </section>
+    </main>
+  </body>
 </html>
