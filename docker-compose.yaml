@@ -1,0 +1,60 @@
+services:
+  js-frontend:
+    build:
+      context: ./frontend
+      dockerfile: ../frontend/Dockerfile
+    image: js-frontend:latest
+    restart: unless-stopped
+    init: true
+    networks:
+      - appnet
+    ports:
+      - '4173:4173'
+    depends_on:
+      - js-server
+
+  js-server:
+    build:
+      context: ./server
+      dockerfile: ../server/Dockerfile
+    image: js-server:latest
+    restart: unless-stopped
+    init: true
+    networks:
+      - appnet
+    ports:
+      - '3001:3001'
+    environment:
+      DATABASE_HOST: mysql-db
+      DATABASE_PORT: 3306
+      DATABASE_USER: root
+      DATABASE_PASSWORD: ''
+    depends_on:
+      - mysql-db
+    env_file: ./server/.env
+
+  mysql-db:
+    image: mysql:latest
+    restart: unless-stopped
+    networks:
+      - appnet
+    environment:
+      MYSQL_ROOT_PASSWORD: ''
+      MYSQL_DATABASE: studentportal
+    ports:
+      - '3307:3306' # Expose MySQL for local dev
+    volumes:
+      - mysql-data:/var/lib/mysql
+    healthcheck:
+      test: ['CMD', 'mysqladmin', 'ping', '-h', 'localhost']
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+networks:
+  appnet:
+    driver: bridge
+
+volumes:
+  mysql-data:
+    # Persistent storage for MySQL

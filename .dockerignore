@@ -1,0 +1,68 @@
+# Node.js dependencies
+**/node_modules/
+
+# Logs and debug files
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+*.log
+
+# IDE/editor settings
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Version control
+.git/
+.gitignore
+.svn/
+.hg/
+
+# Build outputs
+build/
+dist/
+out/
+
+# Test and coverage
+coverage/
+test/
+tests/
+*.test.js
+
+# Temporary and local files
+tmp/
+temp/
+*.tmp
+.local/
+local/
+
+# Environment and secrets
+.env*
+*.env
+*.pem
+*.key
+*.crt
+config.local.*
+*.local.yml
+
+# Documentation and metadata
+docs/
+README*
+*.md
+LICENSE
+
+# SQL and CSV data files
+*.sql
+*.csv
+
+# Docker files
+Dockerfile*
+docker-compose*
+
+# Miscellaneous
+*.DS_Store
+Thumbs.db
+
+# Exclude lock files from being ignored (explicitly allow)
+!**/package-lock.json
